@@ -1,0 +1,39 @@
+/**
+/* Loading page
+**/
+body[data-loading="true"] {
+
+}
+body[data-loading="true"]:before {
+    content: '';
+    background: var(--dark);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9998;
+}
+body[data-loading="true"]:after {
+    content: "\e900";
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: -7.5rem 0 0 -7.5rem;
+    font-size: 1500%;
+    color: var(--spot);
+    z-index: 9999;
+    text-shadow: 0 0 .25rem hsla(0, 0%, 0%, .3);
+}

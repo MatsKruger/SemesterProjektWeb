@@ -1,0 +1,8 @@
+/**
+/* Variables
+**/
+:root {
+    --spot: hsl(46, 54%, 53%);
+    --dark: hsl(211, 18%, 28%);
+    --light: hsl(0, 0%, 76%);
+}
