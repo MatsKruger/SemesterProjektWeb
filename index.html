@@ -11,14 +11,30 @@
 </head>
 <body>
     <header>
-        <div class="find-flights">
-            <label class="form-field"><span>From: </span><input type="text"></label>
-            <label class="form-field"><span>To: </span><input type="text"></label>
-            <div class="form-group">
-                <label class="form-field"><span>Outbound: </span><input type="date"></label>
-                <label class="form-field"><span>Return: </span><input type="date"></label>
+        <nav>
+            <ul class="visible-nav">
+                <li><a class="toggle" href="#main-nav"><i class="icon-more_vert"></i></a></li>
+                <li><a href="/" class="logo"><i class="icon-Logo"></i></a></li>
+                <li><a class="toggle" href="#find-flights"><i class="icon-search"></i></a></li>
+            </ul>
+            <ul class="main-nav" id="main-nav">
+                <li><a href="/#my-booking"><i class="icon-Ticket"></i><span>My Flights</span></a></li>
+                <li><a href="/#flights"><i class="icon-Find"></i><span>Find Flights</span></a></li>
+                <li><a href="/#hotels"><i class="icon-Hotel"></i><span>Hotels</span></a></li>
+                <li><a href="/#contact"><i class="icon-Contact"></i><span>Contact</span></a></li>
+            </ul>
+
+            <div class="find-flights">
+                <label class="form-field"><span>From: </span><input type="text"></label>
+                <label class="form-field"><span>To: </span><input type="text"></label>
+                <div class="form-group">
+                    <label class="form-field"><span>Outbound: </span><input type="date"></label>
+                    <label class="form-field"><span>Return: </span><input type="date"></label>
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
+
+    <script src="/js/main.js" charset="utf-8"></script>
 </body>
 </html>
