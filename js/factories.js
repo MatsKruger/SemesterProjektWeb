@@ -21,11 +21,11 @@ angular.module('bonierFactories', []).
                 console.log("current user: ");
                 console.log(user);
             }
-            
+
             function getUser(){
                 return user;
             }
-            
+
             function resetUser(){
                 user = {};
             }

@@ -38,5 +38,16 @@
     <script src="/js/factories.js" charset="utf-8"></script>
     <script src="/js/filters.js" charset="utf-8"></script>
     <script src="/js/main.js" charset="utf-8"></script>
+    <script type="text/ng-template" id="errorModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Error!</h3>
+            </div>
+            <div class="modal-body">
+                <p>{{error}}</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="ok()" autofocus>OK</button>
+            </div>
+        </script>
 </body>
 </html>

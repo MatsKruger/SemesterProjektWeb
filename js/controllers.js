@@ -15,14 +15,26 @@ app.controller('resultListCtrl', function($scope, searchResultFactory, cartFacto
         $location.url('/booking');
     }
 
-    searchResultFactory.search({origin: "CPH", date: "2016-05-27T00:00:00.000Z", numberOfSeats: 1});
+    //searchResultFactory.search({origin: "CPH", date: "2016-05-27T00:00:00.000Z", numberOfSeats: 1});
 
 });
 
-app.controller('bookingCtrl', function($scope, cartFactory, $http) {
-    $scope.items = [{"date":"2016-05-27T15:00:00.000Z","numberOfSeats":1,"traveltime":60,"totalPrice":70,"origin":"CPH","destination":"SXF","flightID":"2216-1464375600000","flightNumber":"COL2216","airline":"AngularJS Airline","$$hashKey":"object:17"}];//cartFactory.getItems();
+app.controller('bookingCtrl', function($scope, cartFactory, $http, AuthFactory) {
+    $scope.items =
+    // [{
+    //     "airline":"Bonier",
+    //   "flightID": "26982038922503172498605383216",
+    //   "date": "2016-06-27T20:00:00.000Z",
+    //   "traveltime": 120,
+    //   "flightNumber": "087",
+    //   "destination": "STN",
+    //   "origin": "CPH",
+    //   "numberOfSeats": 1,
+    //   "totalPrice": 16
+    // }];
+    cartFactory.getItems();
     $scope.bookee = {
-        name: undefined,
+        name: AuthFactory.getUser().username,
         email: undefined,
         phone: undefined
     }
@@ -37,11 +49,18 @@ app.controller('bookingCtrl', function($scope, cartFactory, $http) {
     $scope.book = function() {
         var bookingParams = {
             passengers: $scope.passengers,
-            reserveeName: $scope.bookee.name,
+            userName: $scope.bookee.name,
             reserveeEmail: $scope.bookee.email,
             reserveePhone: $scope.bookee.phone
         };
+        // var bookingParams = {
+        //     passengers: [{firstName: 'mats', lastName: 'kruger'}],
+        //     userName: 'admin',
+        //     reserveeEmail: 'mats@mats.com',
+        //     reserveePhone: '21232123'
+        // };
         $scope.items.forEach(function(item) {
+            bookingParams.airline = item.airline;
             bookingParams.flightID = item.flightID;
             console.log(bookingParams);
             $http.post(apiUrl + 'api/booking', JSON.stringify(bookingParams)).then(function(response, status) {

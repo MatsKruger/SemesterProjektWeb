@@ -137,6 +137,7 @@ function initializeFromToken($scope, token, jwtHelper, authFactory) {
             $scope.isUser = true;
         }
     });
+    authFactory.setUser({isAuthenticated:$scope.isAuthenticated,isAdmin:$scope.isAdmin,isUser:$scope.isUser,username:$scope.username});
 }
 
 function clearUserDetails($scope, authFactory) {
