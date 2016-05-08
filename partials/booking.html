@@ -1,0 +1,34 @@
+<div class="booking">
+    <h1>Booking</h1>
+    <h2>Contact person</h2>
+    <label class="form-field">
+        <span>Name: </span>
+        <input type="text" ng-model="bookee.name">
+    </label>
+    <div class="form-group">
+        <label class="form-field">
+            <span>Email: </span>
+            <input type="email" ng-model="bookee.email">
+        </label>
+        <label class="form-field">
+            <span>Phone: </span>
+            <input type="text" ng-model="bookee.phone">
+        </label>
+    </div>
+    <h2>Passengers:</h2>
+    <div class="form-group" ng-repeat="(key, passenger) in passengers">
+        <!-- <h4 style="font-size:1rem; display: block; width: 100%; flex: 0 0 100%;">Passenger {{key}} first and last name</h3> -->
+        <label class="form-field">
+            <span>First: </span>
+            <input type="text" ng-model="passenger.firstName">
+        </label>
+        <label class="form-field">
+            <span>Last: </span>
+            <input type="text" ng-model="passenger.lastName">
+        </label>
+    </div>
+    <div class="booking__toolbar">
+        <button type="submit" class="form-button booking__book" ng-click="book()">Book flight</button>
+    </div>
+
+</div>

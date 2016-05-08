@@ -177,22 +177,48 @@ nav {
     transform: translateY(-100%);
     transition: all .3s ease-in-out;
 }
+.find-flights:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 100vh;
+    background: hsla(0, 0%, 20%, .8);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease-in-out;
+}
 .find-flights.open {
     transform: translateY(0);
     box-shadow: 0 0 .4rem hsla(0, 0%, 0%, .3);
 }
-.find-flights.open:before,
-.find-flights.open:after {
+.find-flights.open:before {
     visibility: visible;
     opacity: 1;
 }
-.find-flights.open:before {
-    top: 0;
-}
-.find-flights.open:after {
-    top: 1px;
-}
 
+.booking {
+    padding: 1em;
+    max-width: 60rem;
+    color: var(--spot);
+}
+.booking h1, .booking h2, .booking h3 {
+    text-align: center;
+}
+.booking__toolbar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: hsl(0,0%,20%);
+    padding: 1em;
+    text-align: right;
+}
+.booking__toolbar .form-button {
+    margin: 0;
+    width: auto;
+}
 .main-nav .login-wrapper {
     /*position: absolute;*/
     top: 0;

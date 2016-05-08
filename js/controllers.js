@@ -1,6 +1,6 @@
 var app = angular.module('bonierControllers', []);
 
-app.controller('resultListCtrl', function($scope, searchResultFactory, $http) {
+app.controller('resultListCtrl', function($scope, searchResultFactory, cartFactory, $http, $location) {
     $scope.result = searchResultFactory.getSearchResult();
     $scope.search = searchResultFactory.getSearchParameters();
 
@@ -10,12 +10,48 @@ app.controller('resultListCtrl', function($scope, searchResultFactory, $http) {
         }
     });
 
+    $scope.addToCart = function(flight) {
+        cartFactory.addItem(flight);
+        $location.url('/booking');
+    }
+
     searchResultFactory.search({origin: "CPH", date: "2016-05-27T00:00:00.000Z", numberOfSeats: 1});
 
 });
 
-app.controller('loginCtrl', function() {
+app.controller('bookingCtrl', function($scope, cartFactory, $http) {
+    $scope.items = [{"date":"2016-05-27T15:00:00.000Z","numberOfSeats":1,"traveltime":60,"totalPrice":70,"origin":"CPH","destination":"SXF","flightID":"2216-1464375600000","flightNumber":"COL2216","airline":"AngularJS Airline","$$hashKey":"object:17"}];//cartFactory.getItems();
+    $scope.bookee = {
+        name: undefined,
+        email: undefined,
+        phone: undefined
+    }
+    $scope.passengers = []
+    for (var i = 0; i < $scope.items[0].numberOfSeats; i++) {
+        $scope.passengers[i] = {
+            firstName: undefined,
+            lastName: undefined
+        }
+    }
 
+    $scope.book = function() {
+        var bookingParams = {
+            passengers: $scope.passengers,
+            reserveeName: $scope.bookee.name,
+            reserveeEmail: $scope.bookee.email,
+            reserveePhone: $scope.bookee.phone
+        };
+        $scope.items.forEach(function(item) {
+            bookingParams.flightID = item.flightID;
+            console.log(bookingParams);
+            $http.post(apiUrl + 'api/booking', JSON.stringify(bookingParams)).then(function(response, status) {
+                console.log(response);
+            },function(data, status) {
+                console.log("unhandled error");
+            });
+            // console.log(item);
+        });
+    }
 });
 
 app.controller('searchCtrl', function($scope, searchResultFactory, $http) {
@@ -142,7 +178,19 @@ app.controller('formController', ['$scope', '$http', function($scope, $http, $wi
             });
     };
 }]);
+app.factory('cartFactory', function() {
+    var items = [];
+    // var total = 0;
 
+    return {
+        getItems: function() {
+            return items;
+        },
+        addItem: function(item) {
+            items.push(item);
+        }
+    };
+});
 app.factory('searchResultFactory', function($http, $location, $q) {
     var searchResult = [];
     var searchParameters = [];

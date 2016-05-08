@@ -19,6 +19,10 @@ bonierApp.config(function($routeProvider, $httpProvider) {
         templateUrl: 'partials/result-list.html',
         controller: 'resultListCtrl'
     }).
+    when('/booking', {
+        templateUrl: 'partials/booking.html',
+        controller: 'bookingCtrl'
+    }).
     // when('/start', {
     //     templateUrl: 'partials/start.html',
     //     controller: 'searchCtrl'
