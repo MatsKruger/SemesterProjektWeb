@@ -1,0 +1,17 @@
+<div class="container">
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" ng-model="from" value="" placeholder="From airport" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <input type="text" ng-model="to" value="" placeholder="To airport (optional)" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="date" ng-model="date" value="" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <input type="number" ng-model="seats" value="" placeholder="Number of seats" class="form-control" min="0" required>
+        </div>
+        <button ng-click="search()" class="btn btn-default">Search</button>
+    </form>
+</div>

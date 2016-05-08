@@ -4,17 +4,18 @@ input, textarea, button {
     outline: none;
     padding: 0;
 }
-
+.form-field, .form-button {
+    border-radius: .4rem;
+    padding:0.5rem 1rem;
+    margin-bottom: 1rem;
+}
 .form-field {
     display: flex;
     align-items: center;
     background: white;
-    box-shadow: 0 0 .4rem hsl(0, 0%, 0%, .3);
-    border-radius: .4rem;
+    box-shadow: 0 0 .4rem hsla(0, 0%, 0%, .3);
     line-height: 1;
     position: relative;
-    padding:0.5rem 1rem;
-    margin-bottom: 1rem;
 }
 .form-field span,
 .form-field input {
@@ -31,9 +32,7 @@ input, textarea, button {
 .form-field input {
     flex: 2;
     font-size: 1.2rem;
-    /*width: 10%;*/
-    /*width: 100%;*/
-    /*max-width: 100%;*/
+    width: 100%;
     color: var(--spot);
 }
 .form-group {
@@ -41,10 +40,25 @@ input, textarea, button {
     display: flex;
     justify-content: space-between;
 }
-.form-group .form-field {
+.form-group .form-field, .form-group .form-button {
     /*display: inline-block;*/
     width: calc(50% - .5rem)
 }
 /*.form-group .form-field:first-child {
     margin-right: 1rem;
 }*/
+.form-button {
+    width: 100%;
+    padding: 0;
+    font-size: 1rem;
+    background: var(--spot);
+    color: hsl(0, 0%, 93%);
+    text-transform: uppercase;
+    font-weight: 300;
+    padding: .7em;
+    line-height: 1;
+}
+.form-group:last-child .form-button,
+.form-group:last-child .form-field {
+    margin-bottom: 0;
+}

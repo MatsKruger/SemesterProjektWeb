@@ -1,0 +1,41 @@
+<div class="container">
+	<div class="row">
+
+		<h1>Users</h1>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>
+						Username
+					</th>
+					<th>
+						Name
+					</th>
+					<th>
+						Email
+					</th>
+					<th>
+						Details
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in users">
+					<td>
+						<span ng-bind="user.username"></span>
+					</td>
+					<td>
+						<span ng-bind="user.firstName + ' ' + user.lastName"></span>
+					</td>
+					<td>
+						<span ng-bind="user.email"></span>
+					</td>
+					<td>
+						<a href="#admin/{{user.username}}">Bookings &gt;</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

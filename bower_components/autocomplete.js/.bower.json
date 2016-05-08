@@ -1,0 +1,31 @@
+{
+  "name": "autocomplete.js",
+  "description": "autocomplete.js is JavaScript library, lite, fast, stable, using the JavaScript Strict Mode and validated by JSHint.",
+  "main": "production/autocomplete.js",
+  "authors": [
+    "support@autocomplete-js.com"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "autocomplete"
+  ],
+  "homepage": "https://autocomplete-js.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "moduleType": [],
+  "version": "2.0.2",
+  "_release": "2.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.2",
+    "commit": "5f3e3320356734b2ba0c9166ad45854ce8f06ab0"
+  },
+  "_source": "https://github.com/autocompletejs/autocomplete.js.git",
+  "_target": "2.0.*",
+  "_originalSource": "autocomplete.js"
+}

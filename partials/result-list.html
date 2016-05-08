@@ -1,0 +1,36 @@
+<ul class="flights">
+    <li class="flight" ng-repeat="flight in result">
+        <div class="left">
+            <p class="flight__airline">{{flight.airline}}</p>
+            <p class="flight__from"><span>From:</span> {{flight.origin}}</p>
+            <p class="flight__to"><span>To:</span> {{flight.destination}}</p>
+        </div>
+        <div class="right">
+            <p class="flight__date"><i class="material-icons">date_range</i>{{flight.date | date:"MM/dd/yyyy"}}</p>
+            <p class="flight__time"><i class="material-icons">access_time</i>{{flight.date | date:"HH:MM"}}</p>
+            <p class="flight__seats"><i class="material-icons">people</i>{{flight.numberOfSeats}}</p>
+            <button class="form-button flight__book">
+                <span>Book</span>
+                <span class="flight__price">{{flight.totalPrice}}</span>
+            </button>
+        </div>
+
+    </li>
+    <li class="flight" ng-repeat="flight in result">
+        <div class="left">
+            <p class="flight__airline">{{flight.airline}}</p>
+            <p class="flight__from"><span>From:</span> {{flight.origin}}</p>
+            <p class="flight__to"><span>To:</span> {{flight.destination}}</p>
+        </div>
+        <div class="right">
+            <p class="flight__date"><i class="material-icons">date_range</i>{{flight.date | date:"MM/dd/yyyy"}}</p>
+            <p class="flight__time"><i class="material-icons">access_time</i>{{flight.date | date:"HH:MM"}}</p>
+            <p class="flight__seats"><i class="material-icons">people</i>{{flight.numberOfSeats}}</p>
+            <button class="form-button flight__book">
+                <span>Book</span>
+                <span class="flight__price">{{flight.totalPrice}}</span>
+            </button>
+        </div>
+
+    </li>
+</ul>

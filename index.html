@@ -6,35 +6,37 @@
     <title>Flight finder - Bonier</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="./fonts/icomoon/style.css">
     <link rel="stylesheet" href="./css/app.css">
 </head>
-<body>
-    <header>
-        <nav>
-            <ul class="visible-nav">
-                <li><a class="toggle" href="#main-nav"><i class="icon-more_vert"></i></a></li>
-                <li><a href="/" class="logo"><i class="icon-Logo"></i></a></li>
-                <li><a class="toggle" href="#find-flights"><i class="icon-search"></i></a></li>
-            </ul>
-            <ul class="main-nav" id="main-nav">
-                <li><a href="/#my-booking"><i class="icon-Ticket"></i><span>My Flights</span></a></li>
-                <li><a href="/#flights"><i class="icon-Find"></i><span>Find Flights</span></a></li>
-                <li><a href="/#hotels"><i class="icon-Hotel"></i><span>Hotels</span></a></li>
-                <li><a href="/#contact"><i class="icon-Contact"></i><span>Contact</span></a></li>
-            </ul>
-
-            <div class="find-flights">
-                <label class="form-field"><span>From: </span><input type="text"></label>
-                <label class="form-field"><span>To: </span><input type="text"></label>
-                <div class="form-group">
-                    <label class="form-field"><span>Outbound: </span><input type="date"></label>
-                    <label class="form-field"><span>Return: </span><input type="date"></label>
-                </div>
-            </div>
-        </nav>
-    </header>
-
+<body ng-app="bonierApp">
+    <boniernavbar></boniernavbar>
+    <div ng-view></div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" charset="utf-8"></script>
+    <!-- PROD -->
+    <!-- <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-jwt/dist/angular-jwt.min.js"></script>
+    <script src='bower_components/angular-animate/angular-animate.min.js'></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script> -->
+    <!-- DEV -->
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/angular-jwt/dist/angular-jwt.js"></script>
+    <script src='/bower_components/angular-animate/angular-animate.js'></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="/js/app.js" charset="utf-8"></script>
+    <script src="/js/auth.js" charset="utf-8"></script>
+    <script src="/js/controllers.js" charset="utf-8"></script>
+    <script src="/js/factories.js" charset="utf-8"></script>
+    <script src="/js/filters.js" charset="utf-8"></script>
     <script src="/js/main.js" charset="utf-8"></script>
 </body>
 </html>

@@ -11,22 +11,39 @@ html {
 *:after {
     box-sizing: inherit;
 }
+html, body {
+    height: 100%;
+}
 body {
     background: var(--dark);
     font-family: 'Open Sans', sans-serif;
     font-size: 100%;
     margin: 0;
+    height: auto;
     min-height: 100%;
+    padding-top: 5em;
 }
 header {
     background: var(--blue);
+    position: relative;
+    z-index: 49;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
 }
 nav {
     /*display: flex;*/
     /*position: relative;*/
     /*height: 5em;*/
 }
-
+.container {
+    max-width: 50rem;
+    margin: 0 auto;
+}
+.group {
+    position: relative;
+}
 .logo {
     color: var(--spot)!important;
     /*position: absolute;
@@ -46,10 +63,24 @@ nav {
     list-style: none;
     padding: 5rem 1rem 1rem;
     font-size: 0;
-    background: hsla(0, 0%, 25%, 0);
-    transition: all .3s ease-in-out;
-
-    /*z-index: -1;*/
+    background: hsla(0, 0%, 20%, 1);
+    visibility: hidden;
+    z-index: -1;
+    transform: translateX(-100%);
+    transition: all .3s ease-in-out .3s;
+    box-shadow: 0 0 .5rem hsla(0,0%,0%,.8);
+}
+.main-nav:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200vw;
+    display: block;
+    background: inherit;
+    opacity: 0;
+    transition: all .3s linear .3s;
 }
 .main-nav .open-close {
     content: '';
@@ -95,14 +126,20 @@ nav {
     font-size: 200%;
 }
 .main-nav.open {
-    background: hsla(0, 0%, 25%, 1);
+    visibility: visible;
+    z-index: 49;
+    background: hsla(0, 0%, 20%, 1);
+    transform: translateX(0);
+    transition: transform .3s ease-in-out;
+}
+.main-nav.open:before {
+    opacity: .8;
+    transition: all .3s linear;
 }
 .main-nav.open li {
+    /*display: block;*/
     transform: scale(1);
-}
-
-.find-flights {
-    display: none;
+    transition: transform .3s ease-in-out .3s;
 }
 
 .visible-nav {
@@ -113,8 +150,13 @@ nav {
     margin: 0;
     padding: 0 1.5em;
     height: 5em;
+    position: relative;
+    z-index: 9999;
+    background: var(--blue);
+    border-bottom: 1px solid hsl(212, 10%, 33%);
+    box-shadow: 0 0 0 1px hsl(210, 13%, 21%);
 }
-.visible-nav li a {
+.visible-nav li span, .visible-nav li a {
     font-size: 2.5rem;
     text-decoration: none;
     color: hsla(0, 0%, 100%, .4);
@@ -123,4 +165,222 @@ nav {
 }
 .toggle i {
     pointer-events: none;
+}
+
+.find-flights {
+    position: absolute;
+    top: 5rem;
+    right: 0;
+    left: 0;
+    background: var(--blue-dark);
+    padding: 1.5em;
+    transform: translateY(-100%);
+    transition: all .3s ease-in-out;
+}
+.find-flights.open {
+    transform: translateY(0);
+    box-shadow: 0 0 .4rem hsla(0, 0%, 0%, .3);
+}
+.find-flights.open:before,
+.find-flights.open:after {
+    visibility: visible;
+    opacity: 1;
+}
+.find-flights.open:before {
+    top: 0;
+}
+.find-flights.open:after {
+    top: 1px;
+}
+
+.main-nav .login-wrapper {
+    /*position: absolute;*/
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: -4em 0 1.5em;
+}
+.login {
+    padding: 1.5em
+}
+.flights {
+    margin: 0;
+    padding: 1.5rem;
+    list-style: none;
+}
+.flight {
+    background-image: linear-gradient(-180deg, #ECECEC 0%, #DCDCDC 100%);
+    box-shadow: 0 0 .4rem 0 hsla(0,0%,0%,.25);
+    border-radius: .3rem;
+    width: 100%;
+    max-width: 28rem;
+    margin: 0 auto 1rem;
+    position: relative;
+}
+.flight:before {
+    content: '';
+    width: 100%;
+    padding-top: 35.714285714285715%;
+    display: block;
+}
+.flight .left, .flight .right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 1rem;
+}
+.flight .left {
+    width: 60%;
+    left: 0;
+}
+.flight .left:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-right: 2px dashed hsl(0,0%,85%);
+}
+.flight .right {
+    width: 40%;
+    right: 0;
+    font-size: 120%;
+}
+.flight i {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    font-size: 100%;
+    color: var(--spot);
+    transform: translateY(-50%);
+}
+.flight__airline, .flight__from, .flight__to  {
+    line-height: 1;
+}
+.flight__airline {
+    font-size: 120%;
+    margin: 0 0 3.9rem;
+}
+.flight__from {
+    margin: 0;
+}
+.flight__to {
+    margin: 0;
+}
+.flight__from, .flight__to {
+    font-size: 120%;
+    margin-bottom: .5rem;
+}
+.flight__from span, .flight__to span {
+    margin-right: 1em;
+    font-size: 1rem;
+    color: hsl(0,0%,70%);
+}
+.flight__date {
+    margin: 0;
+}
+.flight__time {
+    margin: 0;
+}
+.flight__seats {
+    margin: 0;
+}
+.flight__date, .flight__time, .flight__seats {
+    position: relative;
+    padding-left: 1.5em;
+    line-height: 1;
+    margin-bottom: .5rem;
+}
+.form-button.flight__book {
+    padding: .4rem;
+    margin: 0;
+}
+.flight__book span {
+    display: block;
+    font-size: 80%;
+    line-height: 1;
+    color: hsl(46, 49%, 39%);
+}
+.flight__book .flight__price {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 0;
+    color: white;
+}
+/* Disable material items */
+.md-datepicker-button, .md-datepicker-triangle-button {
+    display: none;
+}
+.md-datepicker-input-container {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.md-datepicker-input-mask {
+    display: none;
+}
+.md-scroll-mask {
+    background: hsla(0,0%,0%,.5)
+}
+.md-datepicker-calendar-pane {
+    top: 50%!important;
+    left: 50%!important;
+    transform: translate(-50%, -50%)!important;
+}
+.md-datepicker-open .md-datepicker-input-container {
+    margin: 0;
+}
+.md-datepicker-open .md-datepicker-input {
+    height: auto;
+    margin: 0;
+}
+md-datepicker {
+    flex: 2;
+    width: 100%;
+    margin: 0!important;
+    padding: 0!important;
+}
+md-datepicker .md-datepicker-calendar-pane {
+    display: none;
+}
+
+/* JQUERY UI Overides*/
+.ui-autocomplete {
+    position: absolute!important;
+    top: 100%!important;
+    right: 0!important;
+    left: 0!important;
+    width: 100%!important;
+    background: hsl(0,0%,100%);
+    /*border-top: 1px solid hsl(0,0%,90%);*/
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    z-index: 999;
+    /*max-height: 16rem;*/
+    border-radius: 0 0 .3em .3em;
+    /*overflow: hidden;*/
+}
+.ui-autocomplete:before {
+    content: '';
+    position: absolute;
+    top: -.3em;
+    right: 0;
+    left: 0;
+    height: .3em;
+    background: white;
+    display: block;
+    z-index: 999;
+}
+.ui-menu-item {
+    padding: 1rem 2rem;
+    font-size: 120%;
+    color: var(--blue);
+    cursor: pointer;
+    border-top: 1px solid hsl(0,0%,94%);
+    border-radius: inherit;
+}
+.ui-menu-item:hover, .ui-menu-item.ui-state-focus {
+    color: var(--spot);
+    background: hsl(0,0%,98%);
 }

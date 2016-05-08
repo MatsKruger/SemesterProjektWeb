@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-2" id="registration">
+
+        </div>
+    </div>
+    <form class="form-horizontal" role="form" ng-submit="create(user)" id="createUserForm">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="firstname">First name:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" ng-model="user.firstName" id="firstname" placeholder="John" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="lastname">Last name:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" ng-model="user.lastName" id="lastname" placeholder="Doe" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">Email:</label>
+            <div class="col-sm-5">
+                <input type="email" class="form-control" ng-model="user.email" id="email" placeholder="example@email.com" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="username">Username:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" ng-model="user.userName" id="username" placeholder="VapeNation" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="pwd">Password:</label>
+            <div class="col-sm-5">
+                <input type="password" class="form-control" ng-model="user.password" id="pwd" placeholder="********" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="pwdrep">Repeat password:</label>
+            <div class="col-sm-5">
+                <input type="password" class="form-control" ng-model="user.passwordRep" id="pwdrep" placeholder="********" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-5">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

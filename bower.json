@@ -1,0 +1,33 @@
+{
+  "name": "semester.projekt.web",
+  "description": "Web client for the airline",
+  "main": "js/app.js",
+  "authors": [
+    "Group1"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "HTML(AngularJS)",
+    "CSS(SASS)",
+    "Javascript(jQuery)"
+  ],
+  "homepage": "https://github.com/MatsKruger/SemesterProjektWeb",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.2",
+    "angular-route": "^1.5.2",
+    "angular-animate": "^1.5.2",
+    "angular-bootstrap": "^1.2.5",
+    "angular-jwt": "^0.0.9",
+    "pikaday-angular": "^2.0.0",
+    "angular-material": "^1.0.8",
+    "autocomplete.js": "2.0.*"
+  }
+}
