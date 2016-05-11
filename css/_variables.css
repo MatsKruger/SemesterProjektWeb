@@ -7,4 +7,7 @@
     --light: hsl(0, 0%, 76%);
     --blue: hsl(211, 18%, 28%);
     --blue-dark: hsl(210, 14%, 27%);
+    --danger: hsl(10, 80%, 50%);
+    --success: hsl(140, 70%, 40%);
+    --default: hsl(200, 80%, 40%);
 }

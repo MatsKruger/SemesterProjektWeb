@@ -62,22 +62,19 @@ app.controller('bookingCtrl', function($scope, cartFactory, $http, AuthFactory) 
         $scope.items.forEach(function(item) {
             bookingParams.airline = item.airline;
             bookingParams.flightID = item.flightID;
-            console.log(bookingParams);
             $http.post(apiUrl + 'api/booking', JSON.stringify(bookingParams)).then(function(response, status) {
-                console.log(response);
             },function(data, status) {
-                console.log("unhandled error");
             });
             // console.log(item);
         });
     }
 });
 
-app.controller('searchCtrl', function($scope, searchResultFactory, $http) {
+app.controller('searchCtrl', function($scope, searchResultFactory, $http, MessagesFactory) {
     $scope.minDate = new Date();
     $scope.outbound = new Date($scope.minDate);
     $scope.minSeats = 1;
-    $scope.maxSeats = 20;
+    $scope.maxSeats = 999;
     $scope.seats = $scope.minSeats;
     $scope.from = '';
     $scope.to = '';
@@ -92,13 +89,13 @@ app.controller('searchCtrl', function($scope, searchResultFactory, $http) {
     }
     $scope.search = function() {
         if (!$scope.outbound || !$scope.from || !$scope.seats) {
+            MessagesFactory.addMessage('', 'Please fill out all the fields');
             return;
         }
         var date = new Date($scope.outbound);
         var dateUTC = date.getTime() - (date.getTimezoneOffset() * 60000);
 
         var isoDate = new Date(dateUTC).toISOString();
-        console.log(isoDate);
         var searchParameters = {
             "origin": $scope.from.iata,
             "destination": $scope.to.iata || undefined,
@@ -165,38 +162,6 @@ app.controller('searchCtrl', function($scope, searchResultFactory, $http) {
 var errorGlyph = '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> '
 var successGlyph = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> '
 
-app.controller('formController', ['$scope', '$http', function($scope, $http, $window) {
-    $scope.create = function(user) {
-        $('#registration .alert').remove();
-        //validation
-        if (user.userName == undefined || user.firstName == undefined || user.lastName == undefined || user.email == undefined || user.password.trim() === "" || user.passwordRep.trim() === "") {
-            $('#registration .alert').remove();
-            $('#registration').prepend('<div class="alert alert-danger id="message-box">' + errorGlyph + 'Please fill all the fields with a valid input</div>');
-            return;
-        } else if (user.password.length < 6) {
-            $('#registration .alert').remove();
-            $('#registration')
-                .prepend('<div class="alert alert-danger id="message-box">' + errorGlyph + 'Password length needs to be at least 6 characters long</div>');
-            return;
-        } else if (user.password !== user.passwordRep) {
-            $('#registration .alert').remove();
-            $('#registration').prepend('<div class="alert alert-danger id="message-box">' + errorGlyph + 'Passwords do not match</div>');
-            return;
-        }
-
-        //creation post call
-        //delete user.passwordRep;
-        $http.post('/SemesterProject/api/user', user)
-            .success(function(data) {
-                var dataBool = data === "ok";
-                $('#registration .alert').remove();
-                $('#registration').prepend('<div class="alert ' + (dataBool ? 'alert-success' : 'alert-danger') + '" id="message-box">' + (dataBool ? successGlyph : errorGlyph) + (dataBool ? 'Account created' : 'Username taken') + '</div>');
-                if (dataBool) {
-                    $('#createUserForm').remove();
-                }
-            });
-    };
-}]);
 app.factory('cartFactory', function() {
     var items = [];
     // var total = 0;
@@ -276,25 +241,32 @@ app.controller('profileCtrl', function($http, $window, jwtHelper, $scope) {
         });
 });
 
-app.controller('adminCtrl', function($http, $window, jwtHelper, $scope) {
-    var init = function() {
-        var token = $window.sessionStorage.id_token;
-        if (token) {
-            // function in auth.js
-            initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
-        }
-    };
-    init();
+app.controller('adminCtrl', function($http, $window, jwtHelper, $scope, AuthFactory) {
+    // var init = function() {
+    //     var token = $window.sessionStorage.id_token;
+    //     if (token) {
+    //         // function in auth.js
+    //         initializeFromToken($scope, $window.sessionStorage.id_token, jwtHelper);
+    //     }
+    // };
+    // init();
+    $scope.adminUser = AuthFactory.getUser();
 
     $scope.users = [];
-    $http.get('api/user/all')
-        .success(function(data) {
-            console.log(data);
-            $scope.users = data;
-        })
-        .error(function(data) {
-            console.log(data);
-        });
+    $http({
+        method: 'GET',
+        url: apiUrl + 'api/user/all',
+        headers: {
+
+        }
+    })
+    .success(function(data) {
+        console.log(data);
+        $scope.users = data;
+    })
+    .error(function(data) {
+        console.log(data);
+    });
 });
 
 app.controller('adminDetailsCtrl', function($scope, $routeParams, $http) {
@@ -307,4 +279,36 @@ app.controller('adminDetailsCtrl', function($scope, $routeParams, $http) {
         .error(function(data) {
             console.log(data);
         });
+});
+app.controller('messagesCtrl', function($rootScope, $scope, MessagesFactory) {
+    _this = this;
+    $scope.messages = [];
+    let messages = document.querySelector('.messages');
+    $scope.close = function(index) {
+        MessagesFactory.removeMessage(index);
+    };
+    (function() {
+        MessagesFactory.registerObserver(function() {
+            $scope.messages = MessagesFactory.getMessages();
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
+
+            console.dir(messages.offsetHeight);
+            // MessagesFactory.getMessages().then(function (response) {
+            //     console.log('nu');
+            //     _this.messages = response;
+            // });
+        });
+    })();
+    // $scope.$watch(function(){return MessagesFactory.getMessages()}, function(NewValue, OldValue){
+    //     console.log(NewValue + ' ' + OldValue);
+    //     console.log(MessagesFactory.getMessages());
+    // });
+    // $scope.$watch(function () { return MessagesFactory.getMessages() }, function (newVal, oldVal) {
+    //     if (typeof newVal !== 'undefined') {
+    //         console.log('kdal');
+    //         _this.messages = MessagesFactory.getMessages();
+    //     }
+    // });
 });

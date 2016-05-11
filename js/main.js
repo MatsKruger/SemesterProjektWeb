@@ -7,37 +7,63 @@ const hasParent = (elm, parent) => elm === parent ? true : elm === document.body
 **/
 const mainNav = document.getElementById('main-nav');
 const findFlights = document.getElementById('find-flights');
-const toggleElms = document.getElementsByClassName('toggle');
+const toggleElmss = document.getElementsByClassName('toggle')
+let toggleElms;
+let toggleElmsModals;
 
 /**
 ** All other
 **/
+function whichTransitionEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'transition':'transitionend',
+      'OTransition':'oTransitionEnd',
+      'MozTransition':'transitionend',
+      'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for(t in transitions){
+        if( el.style[t] !== undefined ){
+            return transitions[t];
+        }
+    }
+}
+
+var transitionEnd = whichTransitionEvent();
+
+var transitionTimeout;
+
+function addClassOnTransitionEnd(targetToggleElm, close) {
+    let _this = this;
+    clearTimeout(transitionTimeout);
+    transitionTimeout = setTimeout(function() {
+        _this.removeEventListener(transitionEnd, addClassOnTransitionEnd);
+        if (!close) {
+            targetToggleElm.classList.add('open');
+        }
+    }, 300);
+}
 window.addEventListener('click', (event) => {
+    if (!toggleElms) {
+        toggleElms = Array.from(toggleElmss);
+        toggleElmsModals = toggleElms.map(elm => document.getElementById(elm.dataset.id));
+    }
     var target = event.target;
-    if ([].indexOf.call(toggleElms, target) !== -1) {
+    var targetToggleElm = toggleElmsModals[toggleElms.indexOf(target)];
+    if (targetToggleElm) {
         event.preventDefault();
         event.stopPropagation();
+        let close = targetToggleElm.classList.contains('open') ? true : false;
         var toggleElm = document.getElementById(target.dataset.id);
-        toggleElm.classList.contains('open') ? toggleElm.classList.remove('open') : toggleElm.classList.add('open');
+        var filtered = toggleElmsModals.filter(elm => elm.classList.contains('open'));
+        filtered.forEach(elm => {
+            elm.classList.remove('open');
+            elm.addEventListener(transitionEnd, addClassOnTransitionEnd.bind(elm, targetToggleElm, close), false)
+        });
+        if (!close && !filtered.length) {
+            targetToggleElm.classList.add('open');
+        }
     }
 });
-//{origin: "LTN", destination: "", date: "2016-05-08T11:21:07.352Z", numberOfSeats: 1}
-// $.get('http://46.101.175.10/api/flights/CPH/2016-05-08T11:21:07.352Z/1').then(function(data) {
-// 	console.log(data);
-// })
-// $.get('http://angularairline-plaul.rhcloud.com//api/flightinfo/CPH/2016-05-08T11:21:07.352Z/1').then(function(data) {
-// 	console.log(data);
-// })
-// $.ajax({
-//   type: "POST",
-//   url: 'http://localhost:8080/SemesterProject/api/flight',
-//   data: {origin: "LTN", destination: 'Hello', date: "2016-05-08T12:19:33.582Z", numberOfSeats: 1},
-//   success: function(data) {
-//       console.log('nuu')
-//   },
-//   dataType: 'json',
-// });
-// $.post('http://localhost:8080/SemesterProject/api/flight', ).then(function(data) {
-// 	console.log(data);
-// })
-// http://angularairline-plaul.rhcloud.com/api

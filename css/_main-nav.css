@@ -1,0 +1,194 @@
+.main-nav {
+    margin: 0;
+    list-style: none;
+    font-size: 0;
+}
+.main-nav li {
+    position: relative;
+    font-size: 1rem;
+    text-align: center;
+    display: inline-block;
+    transition: all .3s ease-in-out;
+}
+.main-nav li a {
+    display: block;
+    width: 100%;
+    color: var(--spot);
+    text-decoration: none;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+.main-nav li a i {
+    display: block;
+    font-size: 500%;
+    margin-bottom: 1.5rem;
+}
+.main-nav li a span {
+    display: block;
+    font-size: 200%;
+}
+.main-nav .login-wrapper {
+}
+@media screen and (max-width: 50em) {
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        max-width: 50rem;
+        height: calc(100vh - 5rem);
+        padding: 5rem 1rem 1rem;
+        background: hsla(0, 0%, 20%, 1);
+        visibility: hidden;
+        z-index: -1;
+        transform: translateX(-100%);
+        transition: all .3s ease-in-out .3s;
+        box-shadow: 0 0 .5rem hsla(0,0%,0%,.8);
+    }
+    .main-nav:before {
+        content: '';
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 200vw;
+        display: block;
+        background: inherit;
+        opacity: 0;
+        transition: all .3s linear .3s;
+    }
+    .main-nav .open-close {
+        content: '';
+        position: absolute;
+        top: -2.5em;
+        left: 1.5em;
+        color: red;
+        font-size: 1rem;
+        margin-top: -1em;
+        /*transform: translateY(-50%);*/
+        width: 2em;
+        height: 2em;
+        background: red;
+        transform: scale(1);
+        z-index: 99999;
+    }
+    .main-nav li {
+        width: calc(50% - .5rem);
+        margin-bottom: 5rem;
+        transform: scale(0);
+    }
+    .main-nav li a i {
+        display: block;
+        font-size: 500%;
+        margin-bottom: 1.5rem;
+    }
+    .main-nav li a span {
+        display: block;
+        font-size: 200%;
+    }
+    .main-nav.open {
+        visibility: visible;
+        z-index: 49;
+        background: hsla(0, 0%, 20%, 1);
+        transform: translateX(0);
+        transition: transform .3s ease-in-out;
+    }
+    .main-nav.open:before {
+        opacity: .8;
+        transition: all .3s linear;
+    }
+    .main-nav.open li {
+        /*display: block;*/
+        transform: scale(1);
+        transition: transform .3s ease-in-out .3s;
+    }
+    .main-nav .login-wrapper {
+        /*position: absolute;*/
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: -4em 0 1.5em;
+    }
+}
+@media screen and (min-width: 50em) {
+    .main-nav {
+        display: flex;
+        flex-flow: row nowrap;
+        /*position: relative;*/
+        top: 0;
+        left: 0;
+        padding: 0;
+        visibility: visible;
+        transform: none;
+        background: transparent;
+        box-shadow: none;
+        z-index: 99;
+    }
+    .main-nav li {
+        transform: none;
+        margin-right: 1.5em;
+        position: static;
+    }
+    .main-nav li a span {
+        font-size: 160%;
+        text-transform: none;
+        display: inline;
+    }
+    .main-nav li a i {
+        display: inline;
+        font-size: 160%;
+        margin-right: .5em;
+    }
+    .main-nav + .toggle {
+        display: none;
+    }
+    .main-nav .login-wrapper {
+        order: 1;
+        margin-right: 0;
+        margin-left: auto;
+    }
+    .main-nav .login {
+        padding: 0;
+    }
+    .main-nav .login input {
+    }
+    .main-nav .login .form-login .form-button {
+        flex: 0 0 auto;
+        width: auto;
+        margin-left: 1rem;
+    }
+    .main-nav .login .form-login .form-button:first-child {
+        order: 1;
+    }
+    .main-nav .login .form-login .form-group {
+        float: left;
+        /*margin-left: 1rem*/
+    }
+    .main-nav .login .form-group {
+        position: relative;
+        z-index: 99;
+        /*display: inline-block;*/
+    }
+    .main-nav .login .form-signup {
+        position: absolute;;
+        top: 100%;
+        left: 50%;
+        padding: 1.4rem 0 1.5rem;
+        transform: translateX(-50%);
+        border-top: 1px solid hsl(210, 13%, 21%);
+        max-width: 50rem;
+        width: 100%;
+        z-index: 99;
+        /*display: block!important;*/
+    }
+    .main-nav .login .form-signup:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        bottom: 0;
+        width: 100vw;
+        transform: translateX(-50%);
+        background: var(--blue-dark);
+    }
+}

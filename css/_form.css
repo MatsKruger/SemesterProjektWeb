@@ -62,3 +62,7 @@ input, textarea, button {
 .form-group:last-child .form-field {
     margin-bottom: 0;
 }
+.button-default {
+    color: var(--grey);
+    background: var(--light);
+}

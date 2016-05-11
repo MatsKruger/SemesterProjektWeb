@@ -1,0 +1,47 @@
+.find-flights {
+    position: relative;
+    background: var(--blue-dark);
+    padding: 1.5em;
+    transition: all .3s ease-in-out;
+}
+.find-flights:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 100vh;
+    background: hsla(0, 0%, 20%, .8);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease-in-out;
+}
+.find-flights.open {
+    transform: translateY(0);
+    box-shadow: 0 0 .4rem hsla(0, 0%, 0%, .3);
+}
+.find-flights.open:before {
+    visibility: visible;
+    opacity: 1;
+}
+@media screen and (max-width: 50em) {
+    .find-flights {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        background: var(--blue-dark);
+        padding: 1.5em;
+        transform: translateY(-100%);
+        transition: all .3s ease-in-out;
+    }
+}
+@media screen and (min-width: 50em) {
+    .find-flights {
+        z-index: 99;
+        align-self: flex-start;
+    }
+    .find-flights + .toggle {
+        display: none;
+    }
+}

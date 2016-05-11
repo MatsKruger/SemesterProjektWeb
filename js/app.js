@@ -60,3 +60,9 @@ bonierApp.directive("bonierlogin", function() {
         templateUrl: 'partials/login.html'
     };
 });
+bonierApp.directive("messages", function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'partials/messages.html'
+    };
+});

@@ -1,16 +1,56 @@
-<form class="login" role="form" ng-show="!isAuthenticated" ng-submit="login()">
-    <div class="form-group">
-        <label class="form-field">
-            <span>Username: </span>
-            <input type="text" ng-model="user.username">
-        </label>
-        <label class="form-field">
-            <span>Password: </span>
-            <input type="password" ng-model="user.password">
-        </label>
-    </div>
-    <div class="form-group">
-        <div></div>
-        <button type="submit" class="form-button">Login</button>
-    </div>
-</form>
+<div class="login" ng-show="!isAuthenticated">
+    <form class="form-login" ng-show="!signup" role="form" ng-submit="login()">
+        <div class="form-group">
+            <label class="form-field">
+                <span>Username: </span>
+                <input type="text" ng-model="user.username">
+            </label>
+            <label class="form-field">
+                <span>Password: </span>
+                <input type="password" ng-model="user.password">
+            </label>
+        </div>
+        <div class="form-group">
+            <button type="button" class="form-button button-default" ng-click="signup = true">Register</button>
+            <button type="submit" class="form-button">Login</button>
+        </div>
+    </form>
+    <form class="form-signup" ng-show="signup" ng-submit="register()">
+        <div class="form-group">
+            <label class="form-field">
+                <span>Username: </span>
+                <input type="text" ng-model="user.username">
+            </label>
+            <label class="form-field">
+                <span>Password: </span>
+                <input type="password" ng-model="user.password">
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-field">
+                <span>First: </span>
+                <input type="text" ng-model="user.firstName">
+            </label>
+            <label class="form-field">
+                <span>Last: </span>
+                <input type="text" ng-model="user.lastName">
+            </label>
+
+        </div>
+        <div class="form-group">
+            <label class="form-field">
+                <span>Email: </span>
+                <input type="text" ng-model="user.email">
+            </label>
+            <label class="form-field">
+                <span>Phone: </span>
+                <input type="text" ng-model="user.phone">
+            </label>
+
+        </div>
+        <div class="form-group">
+            <button type="button" class="form-button button-default" ng-click="signup = false">Existing user?</button>
+            <button type="submit" class="form-button">Register</button>
+        </div>
+    </form>
+</div>

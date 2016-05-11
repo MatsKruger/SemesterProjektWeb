@@ -1,0 +1,8 @@
+<ul class="messages" ng-controller="messagesCtrl">
+    <li class="message message_{{message.type}} animate-repeat" ng-repeat="(key, message) in messages">
+        <div class="message__text">{{message.text}}</div>
+        <button class="message__close" ng-click="close(key)">
+            <i class="material-icons">close</i>
+        </button>
+    </li>
+</ul>

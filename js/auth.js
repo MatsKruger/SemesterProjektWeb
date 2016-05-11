@@ -1,8 +1,6 @@
 angular.module('bonierSecurity', [])
-        .controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, $uibModal, jwtHelper, AuthFactory) {
-
-
-
+        .controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, $uibModal, jwtHelper, AuthFactory, MessagesFactory) {
+            $scope.user = {};
             $rootScope.$on('logOutEvent', function () {
                 $scope.logout();
             });
@@ -12,42 +10,39 @@ angular.module('bonierSecurity', [])
 
                 if (typeof res.data.error !== "undefined" && res.data.error.message) {
                     if (res.data.error.message.indexOf("No authorization header") === 0) {
-                        //Provide a friendly message
-                        $scope.openErrorModal("You are not authenticated to perform this operation. Please login");
+                        MessagesFactory.addMessage('danger', "You are not authenticated to perform this operation. Please login");
                     }
                     else {
-                        $scope.openErrorModal(res.data.error.message);
+                        MessagesFactory.addMessage('danger', res.data.error.message);
                     }
                 }
                 else {
-                    //You should never get here - format your error messages as suggested by the seed (backend)
-                    $scope.openErrorModal("You are not authenticated");
+                    MessagesFactory.addMessage("You are not authenticated");
                 }
 
             });
 
             $scope.$on("NotAuthorizedEvent", function (event, res) {
                 if (typeof res.data.error !== "undefined" && res.data.error.message) {
-                    $scope.openErrorModal(res.data.error.message);
+                    MessagesFactory.addMessage('danger', res.data.error.message);
                 }
                 else {
-                    $scope.openErrorModal("You are not authorized to perform the requested operation");
+                    MessagesFactory.addMessage('danger', "You are not authorized to perform the requested operation");
                 }
             });
 
             $scope.$on("HttpErrorEvent", function (event, res) {
                 if (typeof res.data.error !== "undefined" && res.data.error.message) {
-                    $scope.openErrorModal(res.data.error.message);
+                    MessagesFactory.addMessage('danger', res.data.error.message);
                 }
                 else {
-                    $scope.openErrorModal("Unknown error during http request");
+                    MessagesFactory.addMessage('danger', "Unknown error during http request");
                 }
             });
 
             clearUserDetails($scope, AuthFactory);
 
             $scope.login = function () {
-                console.log('miodas')
                 $http.post(apiUrl + 'api/login', $scope.user)
                         .success(function (data) {
                             $window.sessionStorage.id_token = data.token;
@@ -60,6 +55,33 @@ angular.module('bonierSecurity', [])
                             clearUserDetails($scope, AuthFactory);
                             AuthFactory.resetUser();
                         });
+            };
+
+            $scope.register = function() {
+                $('#registration .alert').remove();
+                // validation
+                if ($scope.user.username == undefined || $scope.user.firstName == undefined || $scope.user.lastName == undefined || $scope.user.email == undefined || $scope.user.password.trim() === "") {
+                    console.log(MessagesFactory);
+                    MessagesFactory.addMessage('danger', 'Please fill all the fields with a valid input');
+                    // $('#registration .alert').remove();
+                    // $('#registration').prepend('<div class="alert alert-danger id="message-box">' + errorGlyph + 'Please fill all the fields with a valid input</div>');
+                    return;
+                } else if ($scope.user.password.length < 6) {
+                    $('#registration .alert').remove();
+                    $('#registration')
+                        .prepend('<div class="alert alert-danger id="message-box">' + errorGlyph + 'Password length needs to be at least 6 characters long</div>');
+                    return;
+                }
+                var registerParams = $scope.user;
+                registerParams.userName = registerParams.username;
+                // delete registerParams.username;
+
+                //creation post call
+                //delete user.passwordRep;
+                $http.post(apiUrl + 'api/user', registerParams)
+                    .success(function(data) {
+                        $scope.login();
+                    });
             };
 
             $rootScope.logout = function () {
