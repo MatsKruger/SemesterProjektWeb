@@ -11,6 +11,15 @@
     top: 0;
     bottom: 0;
 }
+.flights-filter-toggle {
+    display: none;
+}
+@media screen and (min-width: 50rem) {
+    .flights-filter {
+        min-height: calc(100vh - 5.1em);
+    }
+
+}
 @media screen and (max-width: 50rem) {
     .flights-filter {
         position: fixed;
@@ -20,11 +29,13 @@
         z-index: 999;
         max-width: none;
         transition: all .3s ease-in-out;
+        min-height: calc(100vh - 5.1em);
     }
     .flights-filter.open {
         transform: translateX(100%);
     }
     .flights-filter-toggle {
+        display: block;
         position: fixed;
         top: 1.5rem;
         right: 1.5rem;

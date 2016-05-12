@@ -209,6 +209,9 @@ h1 {
     display: none;
 
 }
+.page-flights .main {
+    margin: 0;
+}
 .page-mybookings .flights .flight {
     /*cursor: pointer;*/
 }
