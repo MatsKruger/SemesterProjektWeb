@@ -1,0 +1,35 @@
+<h1>Contact</h1>
+<div class="contact">
+    <form class="form-contact" role="form" ng-submit="send()">
+        <div class="form-group">
+            <label class="form-field">
+                <span>Name: </span>
+                <input type="text" class="" ng-model="contact.name">
+            </label>
+            <label class="form-field">
+                <span>Email: </span>
+                <input type="text" ng-model="contact.email">
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="form-field">
+                <span>Phone: </span>
+                <input type="text" class="" ng-model="contact.phone">
+            </label>
+            <label class="form-field">
+                <span>Booking: </span>
+                <input type="text" ng-model="contact.booking">
+            </label>
+        </div>
+        <div class="group">
+            <label class="form-field">
+                <span>Phone: </span>
+                <textarea type="text" class="" ng-model="contact.body"></textarea>
+            </label>
+        </div>
+        <div class="form-group">
+            <div></div>
+            <button type="submit" class="form-button">Send</button>
+        </div>
+    </form>
+</div>

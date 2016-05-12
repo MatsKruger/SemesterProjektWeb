@@ -6,7 +6,7 @@
     list-style: none;
     margin: 0;
     padding: 0 1.5em;
-    height: 5em;
+    /*height: 5em;*/
     position: relative;
     z-index: 9999;
 
@@ -27,14 +27,17 @@
     border: inherit;
     top: 0;
     right: 0;
-    bottom: 0;
     left: 0;
+    height: 5em;
     z-index: 99;
     background: var(--blue);
     border-bottom: 1px solid hsl(212, 10%, 33%);
     box-shadow: 0 0 0 1px hsl(210, 13%, 21%);
 }
 @media screen and (min-width: 50em) {
+    .logo {
+        margin: .5em;
+    }
     .visible-nav {
         justify-content: flex-start;
     }
@@ -44,21 +47,23 @@
     }
     .visible-nav > li:first-child {
         flex: 2;
-        z-index: 99;
+        z-index: 999!important;
     }
     .visible-nav > li:first-child, .visible-nav > li:last-child {
         order: 1;
     }
     .visible-nav > li:not(:last-child) {
         height: 100%;
-        padding: 1.25em 0;
+        z-index: 99;
+        /*padding: 1.25em 0;*/
     }
     .visible-nav > li:last-child {
         position: relative;
         left: -1.5em;
         flex: 0 0 100vw;
+        margin: 0 -1.5em;
         width: 100vw;
-        z-index: 0;
+        z-index: 99;
         align-self: flex-start;
 
     }

@@ -1,0 +1,19 @@
+.results {
+    display: flex;
+}
+.flights-filter {
+    /*position: fixed;*/
+    max-width: 25em;
+    width: 100%;
+    padding: 1.5em;
+    /*padding-top: 12rem;*/
+    background: var(--blue-dark);
+    top: 0;
+    bottom: 0;
+}
+/*.flights-filter label, .flights-filter input {
+    display: block;
+}
+.flights-filter input {
+    background
+}*/

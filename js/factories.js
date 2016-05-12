@@ -18,8 +18,6 @@ angular.module('bonierFactories', [])
 
         function setUser(input) {
             user = input;
-            console.log("current user: ");
-            console.log(user);
         }
 
         function getUser() {

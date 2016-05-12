@@ -28,6 +28,7 @@ input, textarea, button {
     font-size: 1rem;
     margin-right: 1rem;
     color: var(--light);
+    white-space: nowrap;
 }
 .form-field input {
     flex: 2;
@@ -35,10 +36,22 @@ input, textarea, button {
     width: 100%;
     color: var(--spot);
 }
+.form-field select {
+    flex: 2;
+    font-size: 1.2rem;
+    width: 100%;
+    background: transparent;
+    outline: none;
+    border: none;
+    color: var(--spot);
+}
 .form-group {
     font-size: 0;
     display: flex;
     justify-content: space-between;
+}
+.form-group > * {
+    font-size: 1.2rem;
 }
 .form-group .form-field, .form-group .form-button {
     /*display: inline-block;*/
@@ -47,6 +60,13 @@ input, textarea, button {
 /*.form-group .form-field:first-child {
     margin-right: 1rem;
 }*/
+textarea {
+    resize: none;
+    width: 100%;
+    min-height: 5em;
+    color: var(--spot);
+    font-size: 120%;
+}
 .form-button {
     width: 100%;
     padding: 0;
@@ -65,4 +85,7 @@ input, textarea, button {
 .button-default {
     color: var(--grey);
     background: var(--light);
+}
+.form-button.button__logout {
+    margin-bottom: 0;
 }

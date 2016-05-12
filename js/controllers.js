@@ -1,25 +1,91 @@
 var app = angular.module('bonierControllers', []);
 
-app.controller('resultListCtrl', function($scope, searchResultFactory, cartFactory, $http, $location) {
+app.controller('resultListCtrl', function($scope, $rootScope, searchResultFactory, cartFactory, $http, $location, MessagesFactory) {
+    $rootScope.bodyClass = 'page page-flights'
     $scope.result = searchResultFactory.getSearchResult();
-    $scope.search = searchResultFactory.getSearchParameters();
-
+    $scope = Object.assign($scope, searchResultFactory.getSearchParameters());
+    // $scope.origin = $scope.search.origin;
+    // $scope.destination = $scope.search.destination;
+    if (!$scope.result.length) {
+        MessagesFactory.addMessage('', 'Please fill the fields to search for flights');
+        $('#autocompleteFrom').focus();
+        $location.url('/');
+    }
     $scope.$watch(function () { return searchResultFactory.getSearchResult() }, function (newVal, oldVal) {
         if (typeof newVal !== 'undefined') {
             $scope.result = searchResultFactory.getSearchResult();
         }
     });
 
+    $scope.searchUpdate = function() {
+        console.log('dadas', $scope.search);
+        // if ($scope.search.origin == undefined || $scope.search.date == undefined || $scope.search.numberOfSeats == undefined) {
+        //     console.log("a parameter undefined");
+        //     //todo visually show which parameter is undefined
+        //     return;
+        // }
+
+
+        var date = new Date($scope.date)
+        var dateUTC = date.getTime() - (date.getTimezoneOffset() * 60000);
+        var isoDate = new Date(dateUTC).toISOString();
+
+        var searchParameters = {
+            "origin": $scope.origin,
+            "destination": $scope.destination,
+            "date": isoDate,
+            "numberOfSeats": $scope.numberOfSeats
+        };
+        console.log(searchParameters)
+
+        //start loading animation here
+        searchResultFactory.search(searchParameters).then(function(result) {
+            console.log(result);
+            $scope.result = result;
+            console.log("new scope result " + $scope.result);
+            //stop loading animation here
+        });
+    };
+
     $scope.addToCart = function(flight) {
         cartFactory.addItem(flight);
         $location.url('/booking');
     }
 
+    autocomplete('autocomplete3', 'origin', $scope, $scope.searchUpdate);
+    autocomplete('autocomplete4', 'destination', $scope, $scope.searchUpdate);
+
     //searchResultFactory.search({origin: "CPH", date: "2016-05-27T00:00:00.000Z", numberOfSeats: 1});
 
 });
+app.controller('myBookingsCtrl', function($scope, $rootScope, AuthFactory, $location, cartFactory, $http, MessagesFactory) {
+    let user = AuthFactory.getUser();
+    if (!user.isAuthenticated) {
+        MessagesFactory.addMessage('', 'Please sign in to see your bookings')
+        $('.login__username').focus();
+        $location.url('/');
+        return;
+    }
+    $rootScope.bodyClass = 'page page-mybookings';
+    $scope.bookings;
+    $http.get(apiUrl + 'api/booking').then(function(response) {
+        $scope.bookings = response.data;
+        console.log($scope.bookings);
+    })
+});
+app.controller('frontPageCtrl', function($rootScope) {
+    $rootScope.bodyClass = 'page page-front';
+});
+app.controller('contactCtrl', function($rootScope, $scope, MessagesFactory) {
+    $rootScope.bodyClass = 'page page-contact';
 
-app.controller('bookingCtrl', function($scope, cartFactory, $http, AuthFactory) {
+    $scope.send = function() {
+        MessagesFactory.addMessage('success', 'Your message has been send!');
+        $('.form-contact').get(0).reset();
+        console.log(this);
+    }
+});
+app.controller('bookingCtrl', function($scope, cartFactory, $http, AuthFactory, MessagesFactory) {
     $scope.items =
     // [{
     //     "airline":"Bonier",
@@ -51,7 +117,7 @@ app.controller('bookingCtrl', function($scope, cartFactory, $http, AuthFactory) 
             passengers: $scope.passengers,
             userName: $scope.bookee.name,
             reserveeEmail: $scope.bookee.email,
-            reserveePhone: $scope.bookee.phone
+            reservePhone: $scope.bookee.phone
         };
         // var bookingParams = {
         //     passengers: [{firstName: 'mats', lastName: 'kruger'}],
@@ -63,7 +129,9 @@ app.controller('bookingCtrl', function($scope, cartFactory, $http, AuthFactory) 
             bookingParams.airline = item.airline;
             bookingParams.flightID = item.flightID;
             $http.post(apiUrl + 'api/booking', JSON.stringify(bookingParams)).then(function(response, status) {
+                MessagesFactory.addMessage('success', 'Thank you for your booking, please check your mail for the ticket(s)');
             },function(data, status) {
+                MessagesFactory.addMessage('danger', 'Something went wrong please try again');
             });
             // console.log(item);
         });
@@ -71,40 +139,36 @@ app.controller('bookingCtrl', function($scope, cartFactory, $http, AuthFactory) 
 });
 
 app.controller('searchCtrl', function($scope, searchResultFactory, $http, MessagesFactory) {
+
     $scope.minDate = new Date();
     $scope.outbound = new Date($scope.minDate);
     $scope.minSeats = 1;
     $scope.maxSeats = 999;
     $scope.seats = $scope.minSeats;
-    $scope.from = '';
-    $scope.to = '';
-    var cached = {
-        from: null,
-        to: null
-    };
+    $scope.origin = {};
+    $scope.destination = {};
     $scope.validate = function() {
         if (Date.parse(this.outbound) < Date.parse(this.minDate)) $scope.outbound = $scope.minDate;
         if (!$scope.seats || $scope.seats < $scope.minSeats) $scope.seats = $scope.minSeats;
         if (!$scope.seats || $scope.seats < $scope.minSeats) $scope.seats = $scope.minSeats;
     }
     $scope.search = function() {
-        if (!$scope.outbound || !$scope.from || !$scope.seats) {
+        if (!$scope.outbound || !$scope.origin || !$scope.seats) {
             MessagesFactory.addMessage('', 'Please fill out all the fields');
             return;
         }
         var date = new Date($scope.outbound);
         var dateUTC = date.getTime() - (date.getTimezoneOffset() * 60000);
-
         var isoDate = new Date(dateUTC).toISOString();
         var searchParameters = {
-            "origin": $scope.from.iata,
-            "destination": $scope.to.iata || undefined,
+            "origin": $scope.origin,
+            "destination": $scope.destination || undefined,
             "date": isoDate,
             "numberOfSeats": $scope.seats
         };
         //todo check input before post request
         searchResultFactory.search(searchParameters);
-        searchParameters.date = $scope.date
+        searchParameters.date = $scope.outbound
         searchResultFactory.saveSearchParameters(searchParameters)
     };
     $('.find-flights').on('focus', 'input', function() {
@@ -115,47 +179,8 @@ app.controller('searchCtrl', function($scope, searchResultFactory, $http, Messag
     $('.find-flights').on('blur', 'input', function() {
         $scope.validate();
     });
-    autocomplete('autocompleteFrom', 'from');
-    autocomplete('autocompleteTo', 'to');
-
-    function autocomplete(id, scopeName) {
-        id = '#' + id;
-        $(id).autocomplete({
-            source: function(request, response) {
-                $.getJSON(apiUrl + 'api/airport?q=' + request.term).then(response);
-            },
-            appendTo: $(id).closest('.group'),
-            minLength: 2,
-            select: function(event, ui) {
-                $scope[scopeName] = ui.item;
-                this.value = ui.item.name + ', ' + ui.item.city + ' ' + ui.item.country;
-                this.blur();
-                return false;
-            },
-            focus: function(event, ui) {
-                return false;
-            }
-        })
-        .keypress(function() {
-            // console.log($scope.from);
-        })
-        .focus(function(){
-            cached[scopeName] = $scope[scopeName];
-            $(this).autocomplete("instance").search($(this).val());
-        })
-        .blur(function(){
-            if ($scope[scopeName] && cached[scopeName] === $scope[scopeName]) {
-                this.value = $scope[scopeName].name + ', ' + $scope[scopeName].city + ' ' + $scope[scopeName].country;
-            }
-            cached[scopeName] = null;
-        })
-        .autocomplete( "instance" )._renderItem = function( ul, item ) {
-            return $("<li>")
-                .attr("data-value", item.iata)
-                .append(item.name + ', ' + item.city + ' ' + item.country)
-                .appendTo(ul);
-        };
-    }
+    autocomplete('autocompleteFrom', 'origin', $scope);
+    autocomplete('autocompleteTo', 'destination', $scope);
 
 });
 
@@ -183,10 +208,14 @@ app.factory('searchResultFactory', function($http, $location, $q) {
     return {
         searchResult: searchResult,
         search: function(searchParameters) {
-            console.log(JSON.stringify(searchParameters), 'dsa');
-            console.log("in search factory");
+            fromattedSearchParameters = {
+                "origin": searchParameters.origin.iata,
+                "destination": searchParameters.destination.iata || undefined,
+                "date": searchParameters.date,
+                "numberOfSeats": searchParameters.numberOfSeats
+            };
             var deferred = $q.defer();
-            $http.post(baseUrl, JSON.stringify(searchParameters)).then(function(response, status) {
+            $http.post(baseUrl, JSON.stringify(fromattedSearchParameters)).then(function(response, status) {
                 searchResult = response.data;
                 $location.url('/flights');
                 deferred.resolve(response.data);
@@ -197,15 +226,15 @@ app.factory('searchResultFactory', function($http, $location, $q) {
             return deferred.promise;
         },
         getSearchResult: function() {
-            console.log("getting search result");
+            // console.log("getting search result");
             return searchResult;
         },
         saveSearchParameters: function(data) {
             searchParameters = data;
-            console.log("saving parameters " + data);
+            // console.log("saving parameters " + data);
         },
         getSearchParameters: function(data) {
-            console.log("getting search parameters");
+            // console.log("getting search parameters");
             return searchParameters;
         }
     };
@@ -293,22 +322,6 @@ app.controller('messagesCtrl', function($rootScope, $scope, MessagesFactory) {
             if(!$scope.$$phase) {
                 $scope.$apply();
             }
-
-            console.dir(messages.offsetHeight);
-            // MessagesFactory.getMessages().then(function (response) {
-            //     console.log('nu');
-            //     _this.messages = response;
-            // });
         });
     })();
-    // $scope.$watch(function(){return MessagesFactory.getMessages()}, function(NewValue, OldValue){
-    //     console.log(NewValue + ' ' + OldValue);
-    //     console.log(MessagesFactory.getMessages());
-    // });
-    // $scope.$watch(function () { return MessagesFactory.getMessages() }, function (newVal, oldVal) {
-    //     if (typeof newVal !== 'undefined') {
-    //         console.log('kdal');
-    //         _this.messages = MessagesFactory.getMessages();
-    //     }
-    // });
 });

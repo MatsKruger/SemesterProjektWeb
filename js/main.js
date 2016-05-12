@@ -67,3 +67,60 @@ window.addEventListener('click', (event) => {
         }
     }
 });
+
+function autocomplete(id, scopeName, $scope, selectCallback) {
+    id = '#' + id;
+    var cached = {
+        origin: null,
+        destination: null
+    };
+    $(id).autocomplete({
+        source: function(request, response) {
+            $.getJSON(apiUrl + 'api/airport?q=' + request.term).then(response);
+        },
+        appendTo: $(id).closest('.group'),
+        minLength: 2,
+        select: function(event, ui) {
+            if (ui.item) {
+                $scope[scopeName] = ui.item;
+                // this.value = ui.item.name + ', ' + ui.item.city + ' ' + ui.item.country;
+            }
+            $scope.$apply();
+            this.blur();
+            if (typeof selectCallback === "function")
+                selectCallback();
+            return false;
+        },
+        focus: function(event, ui) {
+            return false;
+        }
+    })
+    .keypress(function() {
+        // console.log($scope.from);
+    })
+    .focus(function(){
+        cached[scopeName] = Object.assign({}, $scope[scopeName]);
+        // this.setSelectionRange(0, this.value.length)
+        $(this).select().autocomplete("instance").search($(this).val());
+    })
+    .blur(function(){
+        if ($scope[scopeName]) {
+            if (cached[scopeName].iata === $scope[scopeName].iata) {
+                $scope[scopeName] = cached[scopeName];
+            }
+            if (cached[scopeName] === $scope[scopeName]) {
+                $scope.$apply();
+                if ($scope[scopeName].name) {
+                    // this.value = $scope[scopeName].name + ', ' + $scope[scopeName].city + ' ' + $scope[scopeName].country;
+                }
+            }
+        }
+        cached[scopeName] = null;
+    })
+    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+        return $("<li>")
+            .attr("data-value", item.iata)
+            .append(item.name + ', ' + item.city + ' ' + item.country)
+            .appendTo(ul);
+    };
+}

@@ -1,0 +1,28 @@
+<h1>My flights</h1>
+<ul class="flights">
+    <li class="flight" ng-repeat="(key, flight) in bookings">
+        <div class="left">
+            <p class="flight__airline">
+                {{flight.airline}}
+                <span>Flightnumber: {{flight.flightNumber}}</span>
+                <span>Time: {{flight.traveltime}}</span>
+            </p>
+            <p class="flight__from">
+                <span>From:</span>
+                {{flight.origin}}</p>
+            <p class="flight__to">
+                <span>To:</span>
+                {{flight.destination}}</p>
+        </div>
+        <div class="right">
+            <p class="flight__date">
+                <i class="material-icons">date_range</i>{{flight.date | date:"dd/MM/yyyy"}}</p>
+            <p class="flight__time">
+                <i class="material-icons">access_time</i>{{flight.date | date:"HH:MM"}}</p>
+            <p class="flight__seats">
+                <i class="material-icons">people</i>{{flight.passengers.length}}</p>
+            <span class="flight__price">{{flight.totalPrice}}</span>
+            <button class="form-button">Print tickets</button>
+        </div>
+    </li>
+</ul>

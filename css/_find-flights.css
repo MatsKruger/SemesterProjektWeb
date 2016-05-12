@@ -41,6 +41,33 @@
         z-index: 99;
         align-self: flex-start;
     }
+    .find-flights:before {
+        display: none;
+    }
+    .find-flights .container {
+        width: 100%;
+        max-width: none;
+        display: flex;
+        justify-content: center;
+    }
+    .find-flights .container:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    .find-flights .form-field {
+        margin: 0;
+    }
+    .find-flights .form-field {
+        min-width: 13rem;
+    }
+    .find-flights .form-button {
+        margin-left: 1rem;
+    }
+    .find-flights .group, .find-flights .form-group {
+        /*float: left;*/
+        margin-right: 1rem;
+    }
     .find-flights + .toggle {
         display: none;
     }

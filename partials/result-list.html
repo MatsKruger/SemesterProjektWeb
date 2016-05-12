@@ -1,19 +1,98 @@
-<ul class="flights">
-    <li class="flight" ng-repeat="(key, flight) in result">
-        <div class="left">
-            <p class="flight__airline">{{flight.airline}}</p>
-            <p class="flight__from"><span>From:</span> {{flight.origin}}</p>
-            <p class="flight__to"><span>To:</span> {{flight.destination}}</p>
-        </div>
-        <div class="right">
-            <p class="flight__date"><i class="material-icons">date_range</i>{{flight.date | date:"dd/MM/yyyy"}}</p>
-            <p class="flight__time"><i class="material-icons">access_time</i>{{flight.date | date:"HH:MM"}}</p>
-            <p class="flight__seats"><i class="material-icons">people</i>{{flight.numberOfSeats}}</p>
-            <button class="form-button flight__book" ng-click="addToCart(flight)">
-                <span>Book</span>
-                <span class="flight__price">{{flight.totalPrice}}</span>
-            </button>
-        </div>
+<div class="results">
+    <div class="flights-filter">
+        <form>
+            <div class="group">
+                <label class="form-field">
+                    <span>From</span>
+                    <input type="text" class="autocomlete" id="autocomplete3"  ng-model="origin.name">
+                </label>
+            </div>
+            <div class="group">
+                <label class="form-field">
+                    <span>To</span>
 
-    </li>
-</ul>
+                    <input class="form-control"  class="autocomlete" id="autocomplete4" type="text" ng-model="destination.name" placeholder="Optional">
+                </label>
+            </div>
+            <div>
+                <label class="form-field">
+                    <span>Date</span>
+
+                    <input class="form-control" type="date" ng-change="searchUpdate()" ng-model-options="{debounce: 500}" ng-model="date">
+                </label>
+            </div>
+            <div>
+                <label class="form-field">
+                    <span>Number of seats</span>
+
+                    <input class="form-control" min="1" type="number" ng-change="searchUpdate()" ng-model-options="{debounce: 500}" ng-model="numberOfSeats">
+                </label>
+            </div>
+            <div>
+                <label class="form-field">
+                    <span>Airline</span>
+                    <input class="form-control" type="text" ng-model="as.airline">
+                </label>
+            </div>
+            <!-- time of day
+                    <div>
+                        <label>Time of day</label>
+                        <input class="form-control" type="time">
+                    </div>
+                    -->
+            <div>
+                <label class="form-field">
+                    <span>Max price</span>
+                    <input class="form-control" type="number" ng-model="maxPrice" min=0>
+                </label>
+            </div>
+            <div>
+                <label class="form-field">
+                    <span>Maximum travel time</span>
+
+                    <input class="form-control" type="number" ng-model="maxTime" min=0>
+                </label>
+            </div>
+            <div>
+                <label class="form-field">
+                    <span>Order by</span>
+                    <select class="form-control" ng-model="orderProp">
+                        <option value="totalPrice">Price asc</option>
+                        <option value="-totalPrice">Price desc</option>
+                        <option value="traveltime">Travel time</option>
+                        <option value="date">Date</option>
+                    </select>
+                </label>
+            </div>
+        </form>
+    </div>
+    <ul class="flights">
+        <li class="flight" ng-repeat="(key, flight) in result">
+            <div class="left">
+                <p class="flight__airline">
+                    {{flight.airline}}
+                    <span>Flightnumber: {{flight.flightNumber}}</span>
+                </p>
+                <p class="flight__from">
+                    <span>From:</span>
+                    {{flight.origin}}</p>
+                <p class="flight__to">
+                    <span>To:</span>
+                    {{flight.destination}}</p>
+            </div>
+            <div class="right">
+                <p class="flight__date">
+                    <i class="material-icons">date_range</i>{{flight.date | date:"dd/MM/yyyy"}}</p>
+                <p class="flight__time">
+                    <i class="material-icons">access_time</i>{{flight.date | date:"HH:MM"}}</p>
+                <p class="flight__seats">
+                    <i class="material-icons">people</i>{{flight.numberOfSeats}}</p>
+                <button class="form-button flight__book" ng-click="addToCart(flight)">
+                    <span>Book</span>
+                    <span class="flight__price">{{flight.totalPrice}}</span>
+                </button>
+            </div>
+
+        </li>
+    </ul>
+</div>

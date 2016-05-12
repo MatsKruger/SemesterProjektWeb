@@ -15,6 +15,10 @@ var bonierApp = angular.module('bonierApp', [
 bonierApp.config(function($routeProvider, $httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
     $routeProvider.
+    when('/', {
+        templateUrl: 'partials/frontPage.html',
+        controller: 'frontPageCtrl'
+    }).
     when('/flights', {
         templateUrl: 'partials/result-list.html',
         controller: 'resultListCtrl'
@@ -23,14 +27,18 @@ bonierApp.config(function($routeProvider, $httpProvider) {
         templateUrl: 'partials/booking.html',
         controller: 'bookingCtrl'
     }).
+    when('/contact', {
+        templateUrl: 'partials/contact.html',
+        controller: 'contactCtrl'
+    }).
     // when('/start', {
     //     templateUrl: 'partials/start.html',
     //     controller: 'searchCtrl'
     // }).
-    when('/register', {
-        templateUrl: 'partials/registration.html',
-        controller: 'formController'
-    }).
+    // when('/register', {
+    //     templateUrl: 'partials/registration.html',
+    //     controller: 'formController'
+    // }).
     when('/profile', {
         templateUrl: 'partials/profile.html',
         controller: 'profileCtrl'
@@ -42,6 +50,10 @@ bonierApp.config(function($routeProvider, $httpProvider) {
     when('/admin/:username', {
         templateUrl: 'partials/admin-details.html',
         controller: 'adminDetailsCtrl'
+    }).
+    when('/mybookings', {
+        templateUrl: 'partials/mybookings.html',
+        controller: 'myBookingsCtrl'
     }).
     otherwise({
         redirectTo: '/'
