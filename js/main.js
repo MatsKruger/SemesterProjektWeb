@@ -45,28 +45,29 @@ function addClassOnTransitionEnd(targetToggleElm, close) {
         }
     }, 300);
 }
-window.addEventListener('click', (event) => {
-    if (!toggleElms) {
-        toggleElms = Array.from(toggleElmss);
-        toggleElmsModals = toggleElms.map(elm => document.getElementById(elm.dataset.id));
-    }
-    var target = event.target;
-    var targetToggleElm = toggleElmsModals[toggleElms.indexOf(target)];
-    if (targetToggleElm) {
-        event.preventDefault();
-        event.stopPropagation();
-        let close = targetToggleElm.classList.contains('open') ? true : false;
-        var toggleElm = document.getElementById(target.dataset.id);
-        var filtered = toggleElmsModals.filter(elm => elm.classList.contains('open'));
-        filtered.forEach(elm => {
-            elm.classList.remove('open');
-            elm.addEventListener(transitionEnd, addClassOnTransitionEnd.bind(elm, targetToggleElm, close), false)
-        });
-        if (!close && !filtered.length) {
-            targetToggleElm.classList.add('open');
-        }
-    }
-});
+// window.addEventListener('click', (event) => {
+//     if (!toggleElms) {
+//         toggleElms = Array.from(toggleElmss);
+//         toggleElmsModals = toggleElms.map(elm => document.getElementById(elm.dataset.id));
+//     }
+//     var target = event.target;
+//     var targetToggleElm = toggleElmsModals[toggleElms.indexOf(target)];
+//     if (targetToggleElm) {
+//         event.preventDefault();
+//         event.stopPropagation();
+//         let close = targetToggleElm.classList.contains('open') ? true : false;
+//         var toggleElm = document.getElementById(target.dataset.id);
+//         var filtered = toggleElmsModals.filter(elm => elm.classList.contains('open'));
+//         console.log('nuuu');
+//         filtered.forEach(elm => {
+//             elm.classList.remove('open');
+//             elm.addEventListener(transitionEnd, addClassOnTransitionEnd.bind(elm, targetToggleElm, close), false)
+//         });
+//         if (!close && !filtered.length) {
+//             targetToggleElm.classList.add('open');
+//         }
+//     }
+// });
 
 function autocomplete(id, scopeName, $scope, selectCallback) {
     id = '#' + id;

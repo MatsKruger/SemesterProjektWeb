@@ -18,7 +18,6 @@ app.controller('resultListCtrl', function($scope, $rootScope, searchResultFactor
     });
 
     $scope.searchUpdate = function() {
-        console.log('dadas', $scope.search);
         // if ($scope.search.origin == undefined || $scope.search.date == undefined || $scope.search.numberOfSeats == undefined) {
         //     console.log("a parameter undefined");
         //     //todo visually show which parameter is undefined
@@ -36,7 +35,6 @@ app.controller('resultListCtrl', function($scope, $rootScope, searchResultFactor
             "date": isoDate,
             "numberOfSeats": $scope.numberOfSeats
         };
-        console.log(searchParameters)
 
         //start loading animation here
         searchResultFactory.search(searchParameters).then(function(result) {

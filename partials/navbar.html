@@ -3,18 +3,18 @@
     <nav>
         <ul class="nav visible-nav">
             <li>
-                <ul class="main-nav" id="main-nav">
+                <ul class="main-nav" id="main-nav" ng-class="mainNavOpen ? 'open' : ''">
                     <li class="login-wrapper" ng-controller="AppLoginCtrl"><bonierlogin></bonierlogin></li>
-                    <li><a href="/#mybookings"><i class="icon-Ticket"></i><span>My Flights</span></a></li>
-                    <li><a href="/#flights"><i class="icon-Find"></i><span>Find Flights</span></a></li>
-                    <li><a href="/#hotels"><i class="icon-Hotel"></i><span>Hotels</span></a></li>
-                    <li><a href="/#contact"><i class="icon-Contact"></i><span>Contact</span></a></li>
+                    <li><a href="/#mybookings" ng-click="mainNavOpen = !mainNavOpen"><i class="icon-Ticket"></i><span>My Flights</span></a></li>
+                    <li><a href="/#flights" ng-click="mainNavOpen = !mainNavOpen; findFlightsOpen = true"><i class="icon-Find"></i><span>Find Flights</span></a></li>
+                    <li><a href="/#hotels" ng-click="mainNavOpen = !mainNavOpen"><i class="icon-Hotel"></i><span>Hotels</span></a></li>
+                    <li><a href="/#contact" ng-click="mainNavOpen = !mainNavOpen"><i class="icon-Contact"></i><span>Contact</span></a></li>
                 </ul>
-                <span class="toggle" data-id="main-nav"><i class="icon-more_vert"></i></span>
+                <span class="toggle" data-id="main-nav" ng-click="mainNavOpen = !mainNavOpen; findFlightsOpen = false"><i class="icon-more_vert"></i></span>
             </li>
             <li><a href="/" class="logo"><i class="icon-Logo"></i></a></li>
             <li>
-                <div class="find-flights" id="find-flights" ng-controller="searchCtrl">
+                <div class="find-flights" id="find-flights" ng-controller="searchCtrl" ng-class="findFlightsOpen ? 'open' : ''">
                     <div class="container">
                         <div class="group">
                             <label class="form-field">
@@ -43,11 +43,11 @@
                                 <span>Passenger: </span>
                                 <input ng-model="seats" min="{{minSeats}}" max="{{maxSeats}}" value="{{minSeats}}" type="number">
                             </label>
-                            <button class="form-button" ng-click="search()">Find flights</button>
+                            <button class="form-button" ng-click="search(); findFlightsOpen = !findFlightsOpen">Find flights</button>
                         </div>
                     </div>
                 </div>
-                <span class="toggle" data-id="find-flights"><i class="icon-search"></i></span>
+                <span class="toggle" data-id="find-flights" ng-click="findFlightsOpen = !findFlightsOpen; mainNavOpen = false"><i class="icon-search"></i></span>
             </li>
         </ul>
     </nav>

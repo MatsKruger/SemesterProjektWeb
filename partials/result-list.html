@@ -1,5 +1,6 @@
 <div class="results">
-    <div class="flights-filter">
+    <span class="toggle flights-filter-toggle" data-id="flights-filter" ng-click="filterOpen = !filterOpen"><i class="material-icons">filter_list</i></span>
+    <div class="flights-filter" ng-class="filterOpen ? 'open' : ''" id="flights-filter">
         <form>
             <div class="group">
                 <label class="form-field">
